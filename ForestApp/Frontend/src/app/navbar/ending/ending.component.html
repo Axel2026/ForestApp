@@ -1,0 +1,21 @@
+<h2 mat-dialog-title>Dodaj lub usuń...</h2>
+<mat-dialog-content>
+  <div class="main">
+    <div class="table-container">
+       Poczatkowa data:  {{summary.startingDate | date:'short'}} <br>
+       Koncowa data:     {{summary.endingDate | date:'short'}} <br>
+       Ilosc wypalonych pól: {{summary.numberOfDestroyedFields}} <br>
+
+        <ul>
+            <li *ngFor="let recipient of summary.allDamagedFields | keyvalue">
+               <p *ngIf="recipient.value < 100"> {{recipient.key}} -->  {{recipient.value}} % </p>
+               <p *ngIf="recipient.value > 100"> {{recipient.key}} -->  100.0 % </p>
+            </li>
+        </ul>
+       Cala suma:  {{summary.overallPercentageDestroyed}} %
+  </div>
+</div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Zrezygnuj</button>
+</mat-dialog-actions>

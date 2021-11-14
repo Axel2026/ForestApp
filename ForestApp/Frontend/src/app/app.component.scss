@@ -1,0 +1,13 @@
+.main-container{
+    display: flex;
+    background-color: #424242;
+    height: 93.5vh;
+}
+.board{
+    flex-grow: 5;
+}
+.side-menu{
+    flex-grow: 1;
+    margin-top: 10px;
+
+}

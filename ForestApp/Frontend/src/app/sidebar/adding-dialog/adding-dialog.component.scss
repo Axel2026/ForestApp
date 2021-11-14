@@ -1,0 +1,40 @@
+table{
+  height: 100%;
+  table-layout: fixed ;
+  width: 100%;
+
+}
+.table-container{
+  display: flex;
+
+  height: 80%;
+  padding: 50px 50px 0px 50px;
+}
+tr{
+  background-color: green;
+  align-items: center;
+  cursor: pointer;
+}
+td{
+  position: relative;
+  text-align: center;
+}
+img {
+  height: 60px;
+  width: auto;
+  object-fit: contain
+
+}
+.main{
+  height: 600px;
+  width: 600px;
+}
+.mat-icon{
+  height: 5px  !important;
+  width: 5px  !important;
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  font-size: 12px;
+}
+

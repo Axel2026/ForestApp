@@ -1,0 +1,168 @@
+<mat-accordion multi="true">
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            Ustaw rzeczywiste parametry
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+    <form [formGroup]="searchForm" class="d-flex" (ngSubmit)="citySumbit()">
+
+      <div class="input">
+        <mat-form-field >
+            <mat-label>Miasto</mat-label>
+            <input matInput  formControlName="city">
+
+            <mat-error *ngIf="searchFormValue.city.invalid && searchFormValue.city.touched">
+                Thats not correct name of the city!
+            </mat-error>
+        </mat-form-field>
+    </div>
+
+        <div class="input">
+            <button mat-raised-button color="primary" type="sumbit" [disabled]="searchForm.invalid" >Szukaj</button>
+        </div>
+        </form>
+
+</mat-expansion-panel>
+     <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Ustawienia podstawowe
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <form [formGroup]="basicForm" (ngSubmit)="basicParameters()" >
+            <div class="d-flex">
+                <div class="input">
+                    <mat-icon matTooltip="Temperatura">thermostat</mat-icon>
+                    <mat-slider thumbLabel [displayWith]="formatLabel"
+                    min="-30" max="50" step="1" value="0" formControlName="temperature" >
+                    </mat-slider>
+                </div>
+
+                <div class="input">
+                    <mat-icon matTooltip="Ciśnienie">sensors</mat-icon>
+                    <mat-slider thumbLabel [displayWith]="formatLabel"
+
+                    min="900" max="1080" step="1" value="0" formControlName="pressure" >
+                    </mat-slider>
+                </div>
+            </div>
+            <div class="d-flex">
+                <div class="input">
+                    <mat-icon matTooltip="Wilgotność">opacity</mat-icon>
+                    <mat-slider thumbLabel [displayWith]="formatLabel"
+                      min="0" max="100" step="1" value="0" formControlName="humidity" >
+                    </mat-slider>
+                </div>
+
+                <div class="input">
+                    <button mat-raised-button color="primary" type="sumbit" [disabled]="basicForm.invalid" >Zaaplikuj zmiany</button>
+                </div>
+            </div>
+
+            </form>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Ustawienia wiatru
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <form [formGroup]="windForm" class="d-flex" (ngSubmit)="windParameters()" >
+            <div class="input">
+                <mat-form-field >
+                    <mat-label>Siła wiatru</mat-label>
+                    <input matInput  formControlName="strength">
+
+                    <mat-error *ngIf="windFormValue.strength.invalid && windFormValue.strength.touched">
+                        Your strenght doesnt look right
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="input">
+                <mat-icon matTooltip="Kierunek wiatru">explore</mat-icon>
+                <mat-slider thumbLabel [displayWith]="formatLabel"
+                  min="-360" max="360" step="1" value="0" formControlName="direction" >
+                </mat-slider>
+            </div>
+
+            <div class="input">
+                <button mat-raised-button color="primary" type="sumbit" [disabled]="windForm.invalid" >Zaaplikuj zmiany</button>
+            </div>
+            </form>
+
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Ustawienia Gazów
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <form [formGroup]="gasForm">
+            <div class="d-flex">
+                    <mat-form-field class="input2" >
+                        <mat-label>CO</mat-label>
+                        <input matInput  formControlName="co">
+                        <mat-error *ngIf="gasFormValue.co.invalid && gasFormValue.co.touched">
+                            Your strenght doesnt look right
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field  class="input2" >
+                        <mat-label>NO</mat-label>
+                        <input matInput  formControlName="no">
+                        <mat-error *ngIf="gasFormValue.no.invalid && gasFormValue.no.touched">
+                            Your strenght doesnt look right
+                        </mat-error>
+                    </mat-form-field>
+            </div>
+
+            <div class="d-flex">
+                <mat-form-field class="input2" >
+                    <mat-label>NO2</mat-label>
+                    <input matInput  formControlName="no2">
+                    <mat-error *ngIf="gasFormValue.no2.invalid && gasFormValue.no2.touched">
+                        Your strenght doesnt look right
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field  class="input2" >
+                    <mat-label>O3</mat-label>
+                    <input matInput  formControlName="o3">
+                    <mat-error *ngIf="gasFormValue.o3.invalid && gasFormValue.o3.touched">
+                        Your strenght doesnt look right
+                    </mat-error>
+                </mat-form-field>
+        </div>
+
+        <div class="d-flex">
+            <mat-form-field class="input2" >
+                <mat-label>NO2</mat-label>
+                <input matInput  formControlName="no2">
+                <mat-error *ngIf="gasFormValue.no2.invalid && gasFormValue.no2.touched">
+                    Your strenght doesnt look right
+                </mat-error>
+            </mat-form-field>
+
+            <div class="input">
+                <button mat-raised-button color="primary" type="sumbit" [disabled]="gasForm.invalid" >Zaaplikuj zmiany</button>
+            </div>
+    </div>
+
+            </form>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+          <mat-panel-title>
+              Dodaj lub usuń...
+          </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <button mat-raised-button (click)="openDialog()">Dodaj czujniki</button>
+      <button mat-raised-button (click)="openFireDialog()">Ustaw pożary</button>
+
+  </mat-expansion-panel>
+</mat-accordion>

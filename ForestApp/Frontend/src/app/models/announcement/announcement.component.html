@@ -1,0 +1,18 @@
+
+<ul class="list">
+  <cdk-virtual-scroll-viewport class="container" itemSize="" >
+    <div *cdkVirtualFor="let n of agentAnnouncement">
+      <li>
+        <div class="header">
+          {{n.sensor}}
+          <p style='float:right;'>{{n.date | date:'short'}}<p></p>
+
+        </div>
+        <div class="content">
+          {{n.text  }}
+        </div>
+
+      </li>
+    </div>
+  </cdk-virtual-scroll-viewport>
+</ul>

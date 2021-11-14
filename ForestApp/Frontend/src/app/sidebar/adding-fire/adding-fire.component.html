@@ -1,0 +1,47 @@
+<h2 mat-dialog-title>Dodaj lub usuń...</h2>
+<mat-dialog-content>
+  <div class="main">
+    <div class="table-container">
+      <table >
+              <ng-container *ngFor="let row of board; let i = index">
+                  <tr>
+                      <ng-container *ngFor="let col of row; let j = index">
+                          <td   (click)="tickCell(i, j)">
+                            <img  *ngIf="board[i][j].forestFireState === forestFireState.LOW"src="assets/img/fire1.png" >
+                            <img  *ngIf="board[i][j].forestFireState === forestFireState.MEDIUM"src="assets/img/fire2.png" >
+                            <img  *ngIf="board[i][j].forestFireState === forestFireState.HIGH"src="assets/img/fire3.png" >
+                            <img  *ngIf="board[i][j].forestFireState === forestFireState.EXTREME"src="assets/img/fire4.png" >
+                          </td>
+                      </ng-container>
+                  </tr>
+              </ng-container>
+      </table>
+  </div>
+  <div class="sidebar">
+    Wielkość pożaru
+
+    <form [formGroup]="fireFormGroup">
+      <label>
+        <input type="radio" formControlName = "radioValue" [value]="forestFireState.LOW" />  <img src="assets/img/fire1.png" > - NISKI
+      </label>
+      <br>
+      <label>
+        <input type="radio" formControlName = "radioValue" [value]="forestFireState.MEDIUM" /> <img src="assets/img/fire2.png" > - ŚREDNI
+      </label>
+      <br>
+      <label>
+        <input type="radio" formControlName = "radioValue" [value]="forestFireState.HIGH" /> <img src="assets/img/fire3.png" > - WYSOKI
+      </label>
+      <br>
+      <label>
+        <input type="radio" formControlName = "radioValue" [value]="forestFireState.EXTREME" /> <img src="assets/img/fire4.png" > - EKSTREMALNY
+      </label>
+      </form>
+
+  </div>
+</div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Zrezygnuj</button>
+  <button mat-button mat-dialog-close (click)="updateBoard()" >Zapisz zmiany</button>
+</mat-dialog-actions>

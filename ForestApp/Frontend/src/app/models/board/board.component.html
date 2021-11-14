@@ -1,0 +1,31 @@
+
+  <div class="table-container">
+    <table >
+            <ng-container *ngFor="let row of board; let i = index">
+                <tr>
+                    <ng-container *ngFor="let col of row; let j = index">
+                        <td  [ngClass]="{
+                          'low' : col.forestFireIndex == 'LOW',
+                          'moderate' : col.forestFireIndex == 'MODERATE',
+                          'high' : col.forestFireIndex == 'HIGH',
+                          'very-high' : col.forestFireIndex == 'VERY_HIGH',
+                          'extreme' : col.forestFireIndex == 'EXTREME',
+                          'destroyed': board[i][j].forestFireState == forestFireState.DESTROYED
+
+                       }"
+                       >
+                          <img *ngIf="board[i][j].hasSensor" src="assets/img/sensor.png" >
+                          <img *ngIf="board[i][j].beingBurned == true && board[i][j].forestFireState == forestFireState.LOW" src="assets/img/fire1.png" >
+                          <img *ngIf="board[i][j].beingBurned == true && board[i][j].forestFireState == forestFireState.MEDIUM" src="assets/img/fire2.png" >
+                          <img *ngIf="board[i][j].beingBurned == true && board[i][j].forestFireState == forestFireState.HIGH" src="assets/img/fire3.png" >
+                          <img *ngIf="board[i][j].beingBurned == true && board[i][j].forestFireState == forestFireState.EXTREME" src="assets/img/fire4.png" >
+                          <img *ngIf="board[i][j].beingBurned == true && board[i][j].beingExtinguished == true" src="assets/img/fire-vehicle.png" >
+                          <p>{{i}}{{j}}</p>
+
+                        </td>
+                    </ng-container>
+                </tr>
+            </ng-container>
+    </table>
+</div>
+

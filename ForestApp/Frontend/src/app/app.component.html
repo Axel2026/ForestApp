@@ -1,0 +1,16 @@
+<app-navbar></app-navbar>
+<div class="main-container">
+    <div class="board">
+        <app-board></app-board>
+    </div>
+    <div class="side-menu">
+    <mat-tab-group color="warn" >
+        <mat-tab label="Ustawienia symulacji">  <app-tab1></app-tab1>
+             </mat-tab>
+        <mat-tab label="Komunikaty"> <app-tab2></app-tab2> </mat-tab>
+      </mat-tab-group>
+    </div>
+</div>
+
+
+<router-outlet></router-outlet>

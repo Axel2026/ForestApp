@@ -1,0 +1,28 @@
+.d-flex{
+    display: flex;
+    align-items: center;
+}
+.input{
+    flex: 1;
+    display: block;
+    align-items: center;
+}
+
+.input2{
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+.mat-slider-horizontal {
+    width: 80%;
+    min-width: 0px;
+}
+.header-style{
+    margin-top: 10px;
+    margin-right: 10px;
+    text-align: center;
+}
+.mat-icon{
+    vertical-align: -6px;
+    margin-right: 8px;
+}
