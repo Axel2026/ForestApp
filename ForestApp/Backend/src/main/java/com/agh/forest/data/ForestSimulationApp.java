@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.*;
@@ -17,6 +18,7 @@ public class ForestSimulationApp {
     public final int ROW_SIZE_BOARD = 10;
     public final int COLUMN_SIZE_BOARD = 10;
     public final int WINDOW_SIZE = 3;
+    public static FileWriter csvWriter;
 
     @Getter
     private AgentDashboard agentDashboard;
@@ -28,7 +30,30 @@ public class ForestSimulationApp {
     ForestPixel[][] board = new ForestPixel[ROW_SIZE_BOARD][COLUMN_SIZE_BOARD];
 
 
-    ForestSimulationApp(AgentDashboard agentDashboard, BoardCalculation boardCalculation) {
+    ForestSimulationApp(AgentDashboard agentDashboard, BoardCalculation boardCalculation) throws IOException {
+        this.csvWriter = new FileWriter("Stan.csv");
+        csvWriter.append("Temperatura");
+        csvWriter.append(",");
+        csvWriter.append("Siła wiatru");
+        csvWriter.append(",");
+        csvWriter.append("Kierunek wiatru");
+        csvWriter.append(",");
+        csvWriter.append("Wilgotność");
+        csvWriter.append(",");
+        csvWriter.append("Ciśnienie");
+        csvWriter.append(",");
+        csvWriter.append("id");
+        csvWriter.append(",");
+        csvWriter.append("Posiada sensor");
+        csvWriter.append(",");
+        csvWriter.append("Indeks pożaru lasu");
+        csvWriter.append(",");
+        csvWriter.append("Pali się");
+        csvWriter.append(",");
+        csvWriter.append("Jest gaszone");
+        csvWriter.append(",");
+        csvWriter.append("Stan pożaru");
+        csvWriter.append("\n");
         this.agentDashboard = agentDashboard;
         this.boardCalculation = boardCalculation;
         createBoard("London");
@@ -104,7 +129,6 @@ public class ForestSimulationApp {
 
 
     private void calculateFireForestIteration() {
-        System.out.println("XD");
         var copyBoard = makeCopyOfBoard();
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {

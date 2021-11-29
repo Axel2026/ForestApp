@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileWriter;
 import java.io.IOException;
 
 @RestController
@@ -19,7 +20,6 @@ public class BoardController {
 
     @GetMapping("/board")
     public ForestPixelDto[][] getPixels() throws IOException, InterruptedException {
-
         return boardService.getBoard();
 
     }

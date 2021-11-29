@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileWriter;
 import java.io.IOException;
 
 @CrossOrigin("*")
@@ -19,7 +20,7 @@ public class WeatherController {
     private WeatherService weatherService;
 
     @PostMapping("/city")
-    public ResponseEntity<String> setCity(@RequestBody String city){
+    public ResponseEntity<String> setCity(@RequestBody String city) throws IOException {
         weatherService.setBoardWithCityName(city);
         return new ResponseEntity<>(city, HttpStatus.OK);
     }

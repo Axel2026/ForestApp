@@ -103,11 +103,6 @@ public class AgentDashboard {
             this.processingFire();
         }
 
-
-
-        //
-        //System.out.println("XD");
-
     }
     public List<MessageDto> getAgentMessages(){
         List<MessageDto> analystMessages = analystAgent.sendMessage();
