@@ -7,10 +7,17 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.*;
-import java.util.concurrent.*;
+import java.awt.Desktop;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 @Component
 public class ForestSimulationApp {
@@ -31,29 +38,6 @@ public class ForestSimulationApp {
 
 
     ForestSimulationApp(AgentDashboard agentDashboard, BoardCalculation boardCalculation) throws IOException {
-        this.csvWriter = new FileWriter("Stan.csv");
-        csvWriter.append("Temperatura");
-        csvWriter.append(",");
-        csvWriter.append("Siła wiatru");
-        csvWriter.append(",");
-        csvWriter.append("Kierunek wiatru");
-        csvWriter.append(",");
-        csvWriter.append("Wilgotność");
-        csvWriter.append(",");
-        csvWriter.append("Ciśnienie");
-        csvWriter.append(",");
-        csvWriter.append("id");
-        csvWriter.append(",");
-        csvWriter.append("Posiada sensor");
-        csvWriter.append(",");
-        csvWriter.append("Indeks pożaru lasu");
-        csvWriter.append(",");
-        csvWriter.append("Pali się");
-        csvWriter.append(",");
-        csvWriter.append("Jest gaszone");
-        csvWriter.append(",");
-        csvWriter.append("Stan pożaru");
-        csvWriter.append("\n");
         this.agentDashboard = agentDashboard;
         this.boardCalculation = boardCalculation;
         createBoard("London");
@@ -118,7 +102,7 @@ public class ForestSimulationApp {
 
     }
 
-    public void addSensorAgents(ForestPixel forestPixel) {
+    public void addSensorAgents(ForestPixel forestPixel) throws IOException {
         agentDashboard.addSensorAgent(createSurroundingsForPixel(boardCalculation.getRowColNumberFromPixelId(forestPixel)),
                 forestPixel.getId());
     }

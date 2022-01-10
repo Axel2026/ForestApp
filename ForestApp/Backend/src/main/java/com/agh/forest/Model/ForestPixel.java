@@ -26,7 +26,9 @@ public class ForestPixel {
     private double fieldPercentageDestroyed;
     private boolean isBeingBurned;
     private boolean isBeingExtinguish;
+    private String forestType;
     private ForestFireExtingush forestFireExtingush;
+    private String firefighterEmotion;
 
     public ForestPixel createSimilarPixel(int maximumProbabilityValue){
 
@@ -41,6 +43,7 @@ public class ForestPixel {
         ForestPixel newForestPixel = ForestPixel.builder()
                 .airRating(this.airRating)
                 .humidity(this.humidity)
+                .forestType(this.forestType)
                 .pressure(this.pressure)
                 .pollutionGases(this.pollutionGases.duplicate())
                 .wind(this.wind.duplicate())
@@ -49,24 +52,47 @@ public class ForestPixel {
                 .fieldPercentageDestroyed(this.fieldPercentageDestroyed)
                 .isBeingExtinguish(this.isBeingExtinguish)
                 .forestFireExtingush(this.forestFireExtingush)
+                .firefighterEmotion(setFirefighterEmotion(this.forestFireExtingush))
                 .build();
         newForestPixel.temperature.applyProbabilityToFields(probabilityForComponent.get("Temperature"));
         newForestPixel.wind.applyProbabilityToFields(probabilityForComponent.get("Wind"));
         newForestPixel.humidity += probabilityForComponent.get("Other") * humidity;
         newForestPixel.pollutionGases.applyProbabilityToFields(probabilityForComponent.get("PollutionGases"));
         newForestPixel.calculateForestFireDAagerIndex();
-
+        System.out.println(this.firefighterEmotion);
         return newForestPixel;
-
-
     }
 
     public void calculateForestFireDAagerIndex(){
-
         double droughtFactor = getRandomDroughtFactor();
         double exponent = -0.45 + 0.987 * log(droughtFactor) - 0.0345 * getHumidity()  + 0.0338 * getTemperature().getCurrent() + 0.0234 * getWind().getSpeed();
         this.forestFireIndexValue = 2 * exp(exponent);
+    }
 
+    public String setFirefighterEmotion(ForestFireExtingush forestFireExtingush){
+        switch (forestFireExtingush){
+            case LITTLE:
+            case VERY_SMALL:
+            case TINY:
+                //System.out.println("Calm");
+                this.firefighterEmotion = "Calm";
+                return this.firefighterEmotion;
+            case SMALL:
+            case MEDIUM:
+            case BIG:
+                //System.out.println("Concerned");
+                this.firefighterEmotion = "Concerned";
+                return this.firefighterEmotion;
+            case VERY_BIG:
+            case EXTREME:
+            case FULL:
+                //System.out.println("Frightened");
+                this.firefighterEmotion = "Frightened";
+                return this.firefighterEmotion;
+            default:
+                this.firefighterEmotion = "Unknown";
+                return this.firefighterEmotion;
+        }
     }
 
     private int getRandomDroughtFactor(){
@@ -121,6 +147,7 @@ public class ForestPixel {
                 .forestFireIndexValue(this.forestFireIndexValue)
                 .humidity(this.humidity)
                 .isBeingBurned(this.isBeingBurned)
+                .forestType(this.forestType)
                 .pollutionGases(this.pollutionGases)
                 .id(this.id)
                 .pressure(this.pressure)

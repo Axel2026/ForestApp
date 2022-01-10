@@ -8,6 +8,7 @@ import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.FileWriter;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -15,6 +16,10 @@ import java.util.concurrent.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.*;
+import java.util.concurrent.*;
 
 @Component
 public class AgentDashboard {
@@ -47,7 +52,7 @@ public class AgentDashboard {
         date = LocalDateTime.now();
     }
 
-    public void addSensorAgent(List<ForestPixel> agents, String id){
+    public void addSensorAgent(List<ForestPixel> agents, String id) {
         SensorAgent sensorAgent = new SensorAgent();
         sensorAgent.setId(id);
         sensorAgent.setForestPixels(agents);
@@ -69,7 +74,6 @@ public class AgentDashboard {
                     this.analystAgent.analyzeForestFields(forestPixels, id);
                 });
         date = date.plusMinutes(getTimeDelay(4,9));
-        System.out.println("Heh");
         int sum = sensorAgents.stream()
                 .mapToInt(element -> element.getForestPixels().size())
                 .sum();
@@ -159,9 +163,25 @@ public class AgentDashboard {
                             .anyMatch(ForestPixel::isBeingExtinguish);
                     if(!isBeingExtinguish){
                         managingAgent.createMessage(date, Math.max(field.size()/3, 1), field.get(0).getId());
+                        int numOfFiretrucks = Math.max(field.size()/3, 1);
+                        System.out.println("Math.max(field.size()/3, 1): " + Math.max(field.size()/3, 1) + "////" + "field.get(0).getId(): " + field.get(0).getId());
+                        try {
+                            FileWriter csvWriter = new FileWriter("Akcja.csv", true);
+                            csvWriter.append("Id gaszonego pola");
+                            csvWriter.append(",");
+                            csvWriter.append("Ilość wysłanych jednostek");
+                            csvWriter.append(",");
+                            csvWriter.append("Data");
+                            csvWriter.append("\n");
+                            csvWriter.append(field.get(0).getId()).append(" , ").append(String.valueOf(numOfFiretrucks)).append(" , ").append(date.toString().replace("T", " ").substring(0, 19)).append("\n");
+                            csvWriter.append("\n");
+                            csvWriter.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                        /* FirefighterAgent firefighterAgent = new FirefighterAgent();
                         firefighterAgent.setInitialStartForExtinguishFire(field.get(0));
-                        firefighterAgents.add(firefighterAgent); */
+                        firefighterAgents.add(firefighterAgent);*/
 
                         this.addExtinguishFields(field);
                     }
@@ -184,6 +204,76 @@ public class AgentDashboard {
                     return element;
                 })
                 .collect(Collectors.toList());
+        try {
+            //ForestPixel(id=9:9, temperature=Temperature(current=8.497200000000046, temperatureMin=7.051900000000037, temperatureMax=9.72910000000003), hasSensor=true, wind=Wind(speed=100.0, deg=0.0), pressure=1021.0, humidity=86.24, airRating=FAIR, pollutionGases=PollutionGases(co=290.7927, no=0.2277, no2=41.3919, o3=26.9082, so2=17.7012, pm2_5=4.2075, pm10=4.969799999999999, nh3=0.3663), forestFireIndexValue=68.88192839851102, fieldPercentageDestroyed=5218636.669551875, isBeingBurned=true, isBeingExtinguish=true, forestType=null, forestFireExtingush=LITTLE)
+            FileWriter csvWriter = new FileWriter("Individuality2.csv", true);
+            csvWriter.append("Id pola");
+            csvWriter.append(",");
+            csvWriter.append("Aktualna temperatura");
+            csvWriter.append(",");
+            csvWriter.append("Temperatura min");
+            csvWriter.append(",");
+            csvWriter.append("Temperatura max");
+            csvWriter.append(",");
+            csvWriter.append("Posiada sensor");
+            csvWriter.append(",");
+            csvWriter.append("Prędkość wiatru");
+            csvWriter.append(",");
+            csvWriter.append("Kierunek wiatru");
+            csvWriter.append(",");
+            csvWriter.append("Ciśnienie");
+            csvWriter.append(",");
+            csvWriter.append("Wilgotność");
+            csvWriter.append(",");
+            csvWriter.append("Jakość powietrza");
+            csvWriter.append(",");
+            csvWriter.append("CO");
+            csvWriter.append(",");
+            csvWriter.append("NO");
+            csvWriter.append(",");
+            csvWriter.append("NO2");
+            csvWriter.append(",");
+            csvWriter.append("O3");
+            csvWriter.append(",");
+            csvWriter.append("SO2");
+            csvWriter.append(",");
+            csvWriter.append("PM2_5");
+            csvWriter.append(",");
+            csvWriter.append("PM10");
+            csvWriter.append(",");
+            csvWriter.append("NH3");
+            csvWriter.append(",");
+            csvWriter.append("Indeks McArthura");
+            csvWriter.append(",");
+            csvWriter.append("Procent zniszczonych pól");
+            csvWriter.append(",");
+            csvWriter.append("Pali się");
+            csvWriter.append(",");
+            csvWriter.append("Jest gaszone");
+            csvWriter.append(",");
+            csvWriter.append("Typ lasu");
+            csvWriter.append(",");
+            csvWriter.append("Stan ognia");
+            csvWriter.append(",");
+            csvWriter.append("Emocje Strażaków");
+            csvWriter.append("\n");
+            try {
+                csvWriter.append(this.extinguishPixels.get(0).toString().replace("ForestPixel(id=", "").replace("temperature=Temperature(", "").replace("current=", "")
+                        .replace("temperatureMin=", "").replace("temperatureMax=", "").replace(")", "").replace("hasSensor=", "")
+                        .replace("wind=Wind(speed=", "").replace("deg=", "").replace(")", "").replace("pressure=", "")
+                        .replace("humidity=", "").replace("airRating=", "").replace("pollutionGases=PollutionGases(co=", "").replace("no=", "")
+                        .replace("no2=", "").replace("o3=", "").replace("so2=", "").replace("pm2_5=", "").replace("pm10=", "")
+                        .replace("nh3=", "").replace(")", "").replace("forestFireIndexValue=", "").replace("fieldPercentageDestroyed=", "").replace("isBeingBurned=", "")
+                        .replace("isBeingExtinguish=", "").replace("forestType=", "").replace("forestFireExtingush=", "").replace(")", "").replace("firefighterEmotion=", ""));
+            }catch(IndexOutOfBoundsException e){
+                System.out.println("Index aktualnie nie istnieje");
+            }
+            csvWriter.append("\n");
+            csvWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //System.out.println("Zgaszone: " + this.extinguishPixels.get(0));
     }
 
     public int getTimeDelay(int min, int max) {
@@ -202,7 +292,6 @@ public class AgentDashboard {
 
     public List<ForestPixel> extinguishFields() {
         return this.extinguishPixels;
-
     }
     public void resetAgents(){
         sensorAgents = new ArrayList<>();

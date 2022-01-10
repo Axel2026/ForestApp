@@ -23,6 +23,7 @@ public class ForestPixelDto {
     private ForestFireIndex forestFireIndex;
     private boolean isBeingBurned;
     private boolean isBeingExtinguished;
+    private String forestType;
     private ForestFireState forestFireState;
 
 }

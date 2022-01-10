@@ -25,7 +25,7 @@ public class BoardController {
     }
 
     @PostMapping("/board")
-    public ResponseEntity<ForestPixelDto[][]> updateBoard(@RequestBody ForestPixelDto[][] forestPixelDtos) {
+    public ResponseEntity<ForestPixelDto[][]> updateBoard(@RequestBody ForestPixelDto[][] forestPixelDtos) throws IOException {
         boardService.updateBoard(forestPixelDtos);
         return new ResponseEntity<>(forestPixelDtos, HttpStatus.OK);
     }

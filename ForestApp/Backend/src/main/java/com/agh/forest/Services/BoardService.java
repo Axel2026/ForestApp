@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
+import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -30,20 +31,49 @@ public class BoardService {
         int id = 0;
         iter++;
 
-        FileWriter csvWriter = ForestSimulationApp.csvWriter;
+        BufferedWriter outStream = new BufferedWriter(new FileWriter("Individuality.csv", true));
+        outStream.append("Temperatura");
+        outStream.append(",");
+        outStream.append("Siła wiatru");
+        outStream.append(",");
+        outStream.append("Kierunek wiatru");
+        outStream.append(",");
+        outStream.append("Wilgotność");
+        outStream.append(",");
+        outStream.append("Ciśnienie");
+        outStream.append(",");
+        outStream.append("id");
+        outStream.append(",");
+        outStream.append("Posiada sensor");
+        outStream.append(",");
+        outStream.append("Indeks pożaru lasu");
+        outStream.append(",");
+        outStream.append("Pali się");
+        outStream.append(",");
+        outStream.append("Jest gaszone");
+        outStream.append(",");
+        outStream.append("Stan pożaru");
+        outStream.append(",");
+        outStream.append("Id gaszonego pola");
+        outStream.append(",");
+        outStream.append("Ilość wysłanych jednostek");
+        outStream.append(",");
+        outStream.append("Data");
+        outStream.append("\n");
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
                 boardDto[i][j] = mapForestPixeltoForestPixelDTO(board[i][j], id++);
-                csvWriter.append("[" + i + "]" + "[" + j + "] " + String.join(",", boardDto[i][j].toString()).replace("ForestPixelDto(temperature=", "").replace("windStrength=", "").replace("windDirection=", "").replace("humidity=", "").replace("pressure=", "").replace("id=", "").replace("hasSensor=", "").replace("forestFireIndex=", "").replace("isBeingBurned=", "").replace("isBeingExtinguished=", "").replace("forestFireState=", "").replace(")", ""));
-                csvWriter.append("\n");
+                outStream.append("[" + i + "]" + "[" + j + "] " + String.join(",", boardDto[i][j].toString()).replace("ForestPixelDto(temperature=", "").replace("windStrength=", "").replace("windDirection=", "").replace("humidity=", "").replace("pressure=", "").replace("id=", "").replace("hasSensor=", "").replace("forestFireIndex=", "").replace("isBeingBurned=", "").replace("isBeingExtinguished=", "").replace("forestFireState=", "").replace(")", ""));
+                outStream.append("\n");
             }
         }
-        csvWriter.append("Iteracja: " + iter);
-        csvWriter.append("\n");
+        outStream.append("Iteracja: " + iter);
+        outStream.append("\n");
+        outStream.close();
         return boardDto;
     }
 
-    public void updateBoard(ForestPixelDto[][] boardDto) {
+    public void updateBoard(ForestPixelDto[][] boardDto) throws IOException {
         ForestPixel[][] board = forestSimulationApp.getBoard();
         forestSimulationApp.clearSensorAgents();
         for (int i = 0; i < 10; i++) {
@@ -60,6 +90,7 @@ public class BoardService {
 
     public ForestPixelDto mapForestPixeltoForestPixelDTO(ForestPixel pixel, int id) {
         return ForestPixelDto.builder()
+                .forestType(setForestType())
                 .humidity(pixel.getHumidity())
                 .pressure(pixel.getPressure())
                 .windDirection(pixel.getWind().getDeg())
@@ -73,6 +104,18 @@ public class BoardService {
                 .id(id)
                 .build();
 
+    }
+
+    private String setForestType(){
+        int number = (int)(Math.random() * 3) + 1;
+        switch(number){
+            case 1:
+                return "coniferous";
+            case 2:
+                return "deciduous";
+            default:
+                return "mixed";
+        }
     }
 
     private ForestFireIndex converForestFireValueToForestFireIndex(double value) {
@@ -95,7 +138,6 @@ public class BoardService {
                     board[i][j].setPressure(basicParamaters.getPressure());
                     board[i][j].getTemperature().setCurrent(basicParamaters.getTemperature());
                     board[i][j].calculateForestFireDAagerIndex();
-
                 }
             }
         } else {

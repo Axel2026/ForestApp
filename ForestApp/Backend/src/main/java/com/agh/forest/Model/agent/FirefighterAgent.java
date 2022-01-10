@@ -16,6 +16,7 @@ public class FirefighterAgent extends Agent {
     {
         this.forestPixel = pixel;
         forestPixel.setBeingExtinguish(true);
+        System.out.println(forestPixel + "IF");
     }
 
 
