@@ -35,10 +35,6 @@ public class ManagingAgent extends Agent {
         if (hasChanges) {
             try {
                 BufferedWriter outStream2 = new BufferedWriter(new FileWriter("Activity.csv", true));
-                outStream2.append("Aktywnosc");
-                outStream2.append(",");
-                outStream2.append("Piksele");
-                outStream2.append("\n");
                 if (!dangerousPixels.isEmpty()) {
                     //System.out.println("dangerousPixels: " + dangerousPixels);
                     String idPixels = getIdsPixelsFromPixelList(dangerousPixels);

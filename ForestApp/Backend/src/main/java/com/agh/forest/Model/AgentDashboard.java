@@ -1,24 +1,16 @@
 package com.agh.forest.Model;
 
 import com.agh.forest.Model.agent.*;
-import com.agh.forest.data.ForestSimulationApp;
 import com.agh.forest.dto.MessageDto;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.FileWriter;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.concurrent.*;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.*;
-import java.util.concurrent.*;
 
 @Component
 public class AgentDashboard {

@@ -122,6 +122,14 @@ public class ForestPixel {
             case EXTREME: {this.fieldPercentageDestroyed = 76; }
         }
     }
+
+    public static Boolean checkDestroyed(ForestFireState state){
+        if (state == ForestFireState.DESTROYED) {
+            return true;
+        }
+        return false;
+    }
+
     public int convertForestFireExtiguishToValue(){
         switch (forestFireExtingush){
             case LITTLE: return 15;

@@ -33,6 +33,8 @@ public class BoardService {
     static int iter = 0;
     static ArrayList<Integer> burningList = new ArrayList<Integer>();
     static ArrayList<Integer> iterList = new ArrayList<Integer>();
+    static ArrayList<Integer> iterList2 = new ArrayList<Integer>();
+    static ArrayList<Integer> destroyedList = new ArrayList<Integer>();
 
 
     public ForestPixelDto[][] getBoard() throws IOException {
@@ -41,6 +43,16 @@ public class BoardService {
         ForestPixelDto[][] boardDto = new ForestPixelDto[10][10];
         int id = 0;
         iter++;
+
+        BufferedWriter outStream4 = new BufferedWriter(new FileWriter("Activity.csv", true));
+        File file4 = new File("Activity.csv");
+        if (file4.length() == 0) {
+        outStream4.append("Aktywnosc");
+        outStream4.append(",");
+        outStream4.append("Piksele");
+        outStream4.append("\n");
+        }
+        outStream4.close();
 
         BufferedWriter outStream3 = new BufferedWriter(new FileWriter("Individuality2.csv", true));
         File file = new File("Individuality2.csv");
@@ -141,6 +153,8 @@ public class BoardService {
         outStream.append("Emocje strazakow");
         outStream.append("\n");
         int burningSum = 0;
+        int destroyedSum = 0;
+
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
                 boardDto[i][j] = mapForestPixeltoForestPixelDTO(board[i][j], id++);
@@ -150,12 +164,25 @@ public class BoardService {
                     burningSum++;
                     iterList.add(iter);
                 }
+
+                if(ForestPixel.checkDestroyed(boardDto[i][j].getForestFireState())){
+                    destroyedSum++;
+                    iterList2.add(iter);
+                }
             }
         }
         if(burningList.size() == 0){
             burningList.add(burningSum);
         }else if (burningList.get(burningList.size() - 1) != burningSum){
             burningList.add(burningSum);
+        }
+
+        if(destroyedList.size() == 0){
+            destroyedList.add(destroyedSum);
+            System.out.println(destroyedSum + " t1");
+        }else if (destroyedList.get(destroyedList.size() - 1) != destroyedSum){
+            destroyedList.add(destroyedSum);
+            System.out.println(destroyedSum+ " t2");
         }
         outStream.append("Iteracja: " + iter);
         outStream.append("\n");
@@ -172,8 +199,18 @@ public class BoardService {
         JFreeChart chart = ChartFactory.createLineChart("Palenie się pól",
                 "Iteracja", "Ilość palących się pól", dataset, PlotOrientation.VERTICAL,
                 false, true, false);
+
+        DefaultCategoryDataset dataset2 = new DefaultCategoryDataset();
+        for(int i = 0; i < destroyedList.size(); i++){
+            dataset.setValue(destroyedList.get(i), "Iteracja", iterList2.get(i));
+        }
+
+        JFreeChart chart2 = ChartFactory.createLineChart("Zniszczone pola",
+                "Iteracja", "Ilość zniszczonych pól", dataset2, PlotOrientation.VERTICAL,
+                false, true, false);
         try {
-            ChartUtils.saveChartAsJPEG(new File("src/main/java/com/agh/forest/charts/chart.jpg"), chart, 500, 300);
+            ChartUtils.saveChartAsJPEG(new File("src/main/java/com/agh/forest/charts/chartBurning.jpg"), chart, 700, 500);
+            ChartUtils.saveChartAsJPEG(new File("src/main/java/com/agh/forest/charts/chartDestroyed.jpg"), chart2, 700, 500);
         } catch (IOException e) {
             System.err.println(e);
         }
