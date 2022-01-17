@@ -33,4 +33,7 @@ export class ForestPixelService {
    updateParameters(basicParameters: IBasicParameters){
      return this.httpClient.post<IBasicParameters>('http://localhost:8081/forms', basicParameters);
    }
+    generateCharts(){
+      this.httpClient.post<Boolean>('http://localhost:8081/generateCharts', true ).subscribe();
+    }
 }

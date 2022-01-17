@@ -43,7 +43,6 @@ public class ForestPixel {
         ForestPixel newForestPixel = ForestPixel.builder()
                 .airRating(this.airRating)
                 .humidity(this.humidity)
-                .forestType(this.forestType)
                 .pressure(this.pressure)
                 .pollutionGases(this.pollutionGases.duplicate())
                 .wind(this.wind.duplicate())
@@ -52,14 +51,13 @@ public class ForestPixel {
                 .fieldPercentageDestroyed(this.fieldPercentageDestroyed)
                 .isBeingExtinguish(this.isBeingExtinguish)
                 .forestFireExtingush(this.forestFireExtingush)
-                .firefighterEmotion(setFirefighterEmotion(this.forestFireExtingush))
+                .forestType(this.forestType)
                 .build();
         newForestPixel.temperature.applyProbabilityToFields(probabilityForComponent.get("Temperature"));
         newForestPixel.wind.applyProbabilityToFields(probabilityForComponent.get("Wind"));
         newForestPixel.humidity += probabilityForComponent.get("Other") * humidity;
         newForestPixel.pollutionGases.applyProbabilityToFields(probabilityForComponent.get("PollutionGases"));
         newForestPixel.calculateForestFireDAagerIndex();
-        System.out.println(this.firefighterEmotion);
         return newForestPixel;
     }
 
@@ -69,8 +67,8 @@ public class ForestPixel {
         this.forestFireIndexValue = 2 * exp(exponent);
     }
 
-    public String setFirefighterEmotion(ForestFireExtingush forestFireExtingush){
-        switch (forestFireExtingush){
+    public String setFirefighterEmotion(){
+        switch (this.forestFireExtingush){
             case LITTLE:
             case VERY_SMALL:
             case TINY:
@@ -147,13 +145,14 @@ public class ForestPixel {
                 .forestFireIndexValue(this.forestFireIndexValue)
                 .humidity(this.humidity)
                 .isBeingBurned(this.isBeingBurned)
-                .forestType(this.forestType)
                 .pollutionGases(this.pollutionGases)
                 .id(this.id)
                 .pressure(this.pressure)
                 .wind(this.wind)
                 .isBeingExtinguish(this.isBeingExtinguish)
                 .forestFireExtingush(this.forestFireExtingush)
+                .forestType(this.forestType)
+                .firefighterEmotion(this.firefighterEmotion)
                 .build();
     }
 

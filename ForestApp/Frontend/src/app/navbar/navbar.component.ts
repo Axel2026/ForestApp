@@ -23,5 +23,8 @@ export class NavbarComponent implements OnInit {
   endSimulation(){
     this.dialog.open(EndingComponent);
   }
+  generateCharts(){
+    this.forestPixelService.generateCharts();
+  }
 
 }

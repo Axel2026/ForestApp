@@ -1,5 +1,6 @@
 package com.agh.forest.Controllers;
 
+import com.agh.forest.Services.BoardService;
 import com.agh.forest.Services.SimulationService;
 import com.agh.forest.dto.ForestPixelDto;
 import com.agh.forest.dto.Summary;
@@ -35,6 +36,12 @@ public class SimulationController {
         simulationService.getForestSimulationApp().getAgentDashboard().resetAgents();
         simulationService.getForestSimulationApp().createBoard("London");
         simulationService.getForestSimulationApp().setScheduledExecutorService(Executors.newScheduledThreadPool(26));
+        return new ResponseEntity<>(true, HttpStatus.OK);
+    }
+
+    @PostMapping("/generateCharts")
+    public ResponseEntity<Boolean> generateCharts() {
+        BoardService.createChart();
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
