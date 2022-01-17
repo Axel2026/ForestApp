@@ -34,6 +34,7 @@ public class BoardService {
     static ArrayList<Integer> burningList = new ArrayList<Integer>();
     static ArrayList<Integer> iterList = new ArrayList<Integer>();
 
+
     public ForestPixelDto[][] getBoard() throws IOException {
 
         ForestPixel[][] board = forestSimulationApp.getBoard();

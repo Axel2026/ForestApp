@@ -154,6 +154,7 @@ public class ForestPixel {
                 .forestType(this.forestType)
                 .firefighterEmotion(this.firefighterEmotion)
                 .build();
+
     }
 
 

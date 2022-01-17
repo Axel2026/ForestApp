@@ -44,5 +44,4 @@ public class SimulationController {
         BoardService.createChart();
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
-
 }

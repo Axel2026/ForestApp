@@ -30,6 +30,7 @@ public class ManagingAgent extends Agent {
         return messages;
     }
 
+
     public void createMessage(boolean hasChanges, LocalDateTime time) {
         if (hasChanges) {
             try {
